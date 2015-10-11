@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -19,7 +20,7 @@ import arise.arise.org.arise.CourseDetailsActivity;
 /**
  * Created by Arpit Phanda on 3/11/2015.
  */
-public class CourseListListener implements ListView.OnItemClickListener {
+public class CourseListListener implements ListView.OnItemClickListener{
     private Context context;
     private JSONArray lectureArray;
     private CourseStatus status;
@@ -71,4 +72,5 @@ public class CourseListListener implements ListView.OnItemClickListener {
         context.startActivity(courseDetailsDisplay);
 
     }
+
 }

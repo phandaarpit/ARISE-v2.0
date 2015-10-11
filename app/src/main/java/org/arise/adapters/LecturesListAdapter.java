@@ -27,13 +27,16 @@ public class LecturesListAdapter extends BaseAdapter{
     private Context context;
     private boolean completed;
     private boolean current;
+    private int height;
+    private int width;
 
-    public LecturesListAdapter(JSONArray lectureArray, Context context, Boolean completed, Boolean current) {
+    public LecturesListAdapter(JSONArray lectureArray, Context context, Boolean completed, Boolean current, int height, int width) {
         this.lectures = lectureArray;
         this.context = context;
         this.completed = completed;
         this.current = current;
-
+        this.height = height;
+        this.width = width;
     }
 
     @Override
@@ -92,22 +95,26 @@ public class LecturesListAdapter extends BaseAdapter{
 
         if(current)
         {
-            ImageView toFill = (ImageView) row.findViewById(R.id.lecture_status);
+            TextView toFill = (TextView) row.findViewById(R.id.lecture_status);
 
             if(lectureComplete)
             {
+                toFill.setText("COMPLETE");
                 toFill.setBackgroundColor(Color.parseColor("#b2ff59"));
             }
             else if(!lectureComplete)
             {
+                toFill.setText("IN PROGRESS");
                 toFill.setBackgroundColor(Color.parseColor("#ff5252"));
             }
         }
         else if(completed)
         {
-            ImageView toFill = (ImageView) row.findViewById(R.id.lecture_status);
+            TextView toFill = (TextView) row.findViewById(R.id.lecture_status);
+            toFill.setText("COMPLETE");
             toFill.setBackgroundColor(Color.parseColor("#b2ff59"));
         }
+        row.setLayoutParams(new ViewGroup.LayoutParams(this.width,this.height));
         return row;
     }
 }

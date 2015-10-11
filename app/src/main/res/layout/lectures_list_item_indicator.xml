@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@android:drawable/dialog_holo_light_frame"
     >
     <LinearLayout
+        android:id="@+id/top"
         android:orientation="horizontal"
         android:background="#ff414141"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
         <ImageView
@@ -32,8 +33,12 @@
 
     </LinearLayout>
 
-    <ImageView
+    <TextView
+        android:layout_alignBottom="@+id/top"
         android:id="@+id/lecture_status"
         android:layout_width="match_parent"
-        android:layout_height="1.5dp" />
-</LinearLayout>
+        android:textColor="#000"
+        android:gravity="center"
+        android:elevation="50dp"
+        android:layout_height="30dp" />
+</RelativeLayout>

@@ -3,6 +3,7 @@ package arise.arise.org.arise;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,13 @@ public class CourseDetailsActivity extends BaseActivity {
 
 
     private JSONObject courseFromJSON;
+    ListView listLecture;
+    String courseName = "";
+    String courseDesc = "";
+    Boolean completed;
+    Boolean current;
+    JSONArray lectureArray = null;
+    int courseID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,9 @@ public class CourseDetailsActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
 
         String course = bundle.getString("Course");
-        Boolean completed = bundle.getBoolean("completed");
-        Boolean current = bundle.getBoolean("current");
-        String courseName = "";
-        String courseDesc = "";
-        JSONArray lectureArray = null;
-        int courseID = 0;
+        completed = bundle.getBoolean("completed");
+        current = bundle.getBoolean("current");
+
         try {
             courseFromJSON = new JSONObject(course);
 
@@ -61,9 +66,17 @@ public class CourseDetailsActivity extends BaseActivity {
         TextView courseDescription = (TextView) findViewById(R.id.course_description_complete);
         courseDescription.setText(courseDesc);
 
-        ListView listLecture = (ListView) findViewById(R.id.lecture_list);
-        listLecture.setAdapter(new LecturesListAdapter(lectureArray,this,completed,current));
-        listLecture.setOnItemClickListener(new LectureListListener(this,lectureArray,completed,current,courseID));
+        int toolbarHeight = toolbar.getHeight();
+        int courseDescriptionHeight = courseDescription.getHeight();
+
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+
+
+        listLecture = (ListView) findViewById(R.id.lecture_list);
 
         NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawer.setUpDrawer(drawerLayout,toolbar, R.id.fragment_navigation_drawer, main_view);
@@ -91,5 +104,11 @@ public class CourseDetailsActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        listLecture.setAdapter(new LecturesListAdapter(lectureArray, this, completed, current, listLecture.getHeight(),listLecture.getWidth()));
+        listLecture.setOnItemClickListener(new LectureListListener(this, lectureArray, completed, current, courseID));
     }
 }

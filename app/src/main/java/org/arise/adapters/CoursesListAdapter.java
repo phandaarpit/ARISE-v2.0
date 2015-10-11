@@ -115,10 +115,12 @@ public class CoursesListAdapter extends BaseAdapter{
         }
         else if(option==CourseStatus.COMPLETED)
         {
+            toFill.setText("COMPLETED");
             toFill.setBackgroundColor(Color.parseColor("#b2ff59"));
         }
         else if(option == CourseStatus.CURRENT)
         {
+            toFill.setText("IN PROGRESS");
             toFill.setBackgroundColor(Color.parseColor("#ffb300"));
         }
 

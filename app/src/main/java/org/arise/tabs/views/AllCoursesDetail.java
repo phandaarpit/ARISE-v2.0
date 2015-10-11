@@ -71,6 +71,7 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
             {
                 courses = completeResponse.getJSONArray("courses");
                 this.courses = courses;
+
                 //added a new parameter to keep a check on status of the course
                 list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL,layout.getHeight(),layout.getWidth()));
                 list.setOnItemClickListener(new CourseListListener(getActivity(),courses, CourseStatus.ALL));
