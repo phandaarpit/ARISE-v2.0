@@ -124,7 +124,6 @@ public class CoursesListAdapter extends BaseAdapter{
             toFill.setBackgroundColor(Color.parseColor("#ffb300"));
         }
 
-
         return row;
     }
 }

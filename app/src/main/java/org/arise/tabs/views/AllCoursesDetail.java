@@ -3,7 +3,11 @@ package org.arise.tabs.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MotionEventCompat;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -14,6 +18,7 @@ import org.arise.adapters.CoursesListAdapter;
 import org.arise.enums.CourseRequestType;
 import org.arise.enums.CourseStatus;
 import org.arise.enums.Options;
+import org.arise.gesture.CustomGestureDetector;
 import org.arise.interfaces.IAsyncInterface;
 import org.arise.listeners.CourseListListener;
 import org.json.JSONArray;
@@ -35,6 +40,9 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
     private View layout;
     private ListView list;
 
+    private GestureDetector gestureDetector;
+    private View.OnTouchListener gestureListener;
+
     public AllCoursesDetail()
     {
 
@@ -53,6 +61,14 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
         nameValuePairs.add(new BasicNameValuePair(CourseRequestType.TYPE.toString(), CourseRequestType.ALL.toString()));
         nameValuePairs.add(new BasicNameValuePair("url", url));
         new AsyncTaskManager(Options.ALL_COURSES,this, getActivity()).execute(nameValuePairs);
+
+        gestureDetector = new GestureDetector(new CustomGestureDetector());
+        gestureListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
 
         super.onCreate(savedInstanceState);
 
@@ -73,8 +89,9 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
                 this.courses = courses;
 
                 //added a new parameter to keep a check on status of the course
-                list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL,layout.getHeight(),layout.getWidth()));
-                list.setOnItemClickListener(new CourseListListener(getActivity(),courses, CourseStatus.ALL));
+                list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL, layout.getHeight(), layout.getWidth()));
+                list.setOnItemClickListener(new CourseListListener(getActivity(), courses, CourseStatus.ALL));
+                list.setOnTouchListener(gestureListener);
             }
 
         } catch (JSONException e) {
