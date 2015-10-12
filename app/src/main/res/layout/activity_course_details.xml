@@ -56,7 +56,7 @@
         android:padding="7dp"
         android:background="#E0E0E0" />
 
-    <ListView
+    <org.arise.CustomView.SingleScrollListView
         android:id="@+id/lecture_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -64,6 +64,6 @@
         android:layout_marginRight="2dp"
         android:layout_marginBottom="2dp">
 
-    </ListView>
+    </org.arise.CustomView.SingleScrollListView>
 
 </LinearLayout>

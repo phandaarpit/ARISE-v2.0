@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.arise.CustomView.SingleScrollListView;
 import org.arise.adapters.LecturesListAdapter;
 import org.arise.fragments.NavigationDrawer;
 import org.arise.listeners.LectureListListener;
@@ -22,7 +23,7 @@ public class CourseDetailsActivity extends BaseActivity {
 
 
     private JSONObject courseFromJSON;
-    ListView listLecture;
+    SingleScrollListView listLecture;
     String courseName = "";
     String courseDesc = "";
     Boolean completed;
@@ -66,17 +67,7 @@ public class CourseDetailsActivity extends BaseActivity {
         TextView courseDescription = (TextView) findViewById(R.id.course_description_complete);
         courseDescription.setText(courseDesc);
 
-        int toolbarHeight = toolbar.getHeight();
-        int courseDescriptionHeight = courseDescription.getHeight();
-
-
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int height = displaymetrics.heightPixels;
-        int width = displaymetrics.widthPixels;
-
-
-        listLecture = (ListView) findViewById(R.id.lecture_list);
+        listLecture = (SingleScrollListView) findViewById(R.id.lecture_list);
 
         NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawer.setUpDrawer(drawerLayout,toolbar, R.id.fragment_navigation_drawer, main_view);
@@ -110,5 +101,6 @@ public class CourseDetailsActivity extends BaseActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         listLecture.setAdapter(new LecturesListAdapter(lectureArray, this, completed, current, listLecture.getHeight(),listLecture.getWidth()));
         listLecture.setOnItemClickListener(new LectureListListener(this, lectureArray, completed, current, courseID));
+        listLecture.setSingleScroll(true);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.arise.CustomView.SingleScrollListView;
 import org.arise.adapters.CoursesListAdapter;
 import org.arise.enums.CourseRequestType;
 import org.arise.enums.CourseStatus;
@@ -35,7 +36,7 @@ public class CurrentCoursesDetail extends Fragment implements IAsyncInterface {
     private final String url ="http://ariseimpactapps.in/audiolearningapp/course_details.php";
     JSONArray courses;
     private View layout;
-    private ListView list;
+    private SingleScrollListView list;
 
     public CurrentCoursesDetail()
     {
@@ -45,7 +46,7 @@ public class CurrentCoursesDetail extends Fragment implements IAsyncInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment,container,false);
-        list = (ListView) layout.findViewById(R.id.list_course_lectures);
+        list = (SingleScrollListView) layout.findViewById(R.id.list_course_lectures);
 
         return layout;
     }
@@ -81,6 +82,7 @@ public class CurrentCoursesDetail extends Fragment implements IAsyncInterface {
                 this.courses = courses;
                 list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.CURRENT, layout.getHeight(), layout.getWidth()));
                 list.setOnItemClickListener(new CourseListListener(getActivity(),courses,CourseStatus.CURRENT));
+                list.setSingleScroll(true);
             }
 
         } catch (JSONException e) {

@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.arise.CustomView.SingleScrollListView;
 import org.arise.adapters.CoursesListAdapter;
 import org.arise.enums.CourseRequestType;
 import org.arise.enums.CourseStatus;
@@ -38,8 +39,8 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
     private final String url ="http://ariseimpactapps.in/audiolearningapp/course_details.php";
     JSONArray courses;
     private View layout;
-    private ListView list;
-
+    public static SingleScrollListView list;
+    public static int current = 0;
     private GestureDetector gestureDetector;
     private View.OnTouchListener gestureListener;
 
@@ -51,7 +52,7 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment,container,false);
-        list = (ListView) layout.findViewById(R.id.list_course_lectures);
+        list = (SingleScrollListView) layout.findViewById(R.id.list_course_lectures);
         return layout;
     }
 
@@ -61,14 +62,6 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
         nameValuePairs.add(new BasicNameValuePair(CourseRequestType.TYPE.toString(), CourseRequestType.ALL.toString()));
         nameValuePairs.add(new BasicNameValuePair("url", url));
         new AsyncTaskManager(Options.ALL_COURSES,this, getActivity()).execute(nameValuePairs);
-
-        gestureDetector = new GestureDetector(new CustomGestureDetector());
-        gestureListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        };
 
         super.onCreate(savedInstanceState);
 
@@ -91,7 +84,7 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
                 //added a new parameter to keep a check on status of the course
                 list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL, layout.getHeight(), layout.getWidth()));
                 list.setOnItemClickListener(new CourseListListener(getActivity(), courses, CourseStatus.ALL));
-                list.setOnTouchListener(gestureListener);
+                list.setSingleScroll(true);
             }
 
         } catch (JSONException e) {
