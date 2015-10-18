@@ -35,7 +35,7 @@ public class LectureListListener implements ListView.OnItemClickListener{
 
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView adapterView, View view, int i, long l) {
         JSONObject lecture = null;
         String lectureName = "";
         String lectureUrl = "";

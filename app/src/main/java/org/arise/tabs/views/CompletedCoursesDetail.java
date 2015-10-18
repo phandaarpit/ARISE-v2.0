@@ -37,6 +37,7 @@ public class CompletedCoursesDetail extends Fragment implements IAsyncInterface{
     private View layout;
     private SingleScrollListView list;
     public static CoursesListAdapter adapter;
+    private CourseListListener listener;
 
     public CompletedCoursesDetail()
     {
@@ -83,7 +84,10 @@ public class CompletedCoursesDetail extends Fragment implements IAsyncInterface{
 
                 adapter = new CoursesListAdapter(getActivity(),this.courses, CourseStatus.COMPLETED, layout.getHeight(), layout.getWidth());
                 list.setAdapter(adapter);
-                list.setOnItemClickListener(new CourseListListener(getActivity(),courses,CourseStatus.COMPLETED));
+
+                listener = new CourseListListener(getActivity(), courses, CourseStatus.ALL);
+                list.setOnItemClickListener(listener);
+                list.setOnItemLongClickListener(listener);
                 list.setSingleScroll(true);
             }
 

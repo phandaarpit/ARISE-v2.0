@@ -35,6 +35,7 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
     private View layout;
     public static SingleScrollListView list;
     public static CoursesListAdapter adapter;
+    private CourseListListener listener;
 
     public AllCoursesDetail()
     {
@@ -76,7 +77,10 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
                 //added a new parameter to keep a check on status of the course
                 adapter = new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL, layout.getHeight(), layout.getWidth());
                 list.setAdapter(adapter);
-                list.setOnItemClickListener(new CourseListListener(getActivity(), courses, CourseStatus.ALL));
+
+                listener = new CourseListListener(getActivity(), courses, CourseStatus.ALL);
+                list.setOnItemClickListener(listener);
+                list.setOnItemLongClickListener(listener);
                 list.setSingleScroll(true);
             }
 

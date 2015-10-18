@@ -61,6 +61,8 @@ public class LecturesListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        System.out.println("Will return listItem");
+        tts.snooze();
         View row;
         JSONObject lecture = null;
         String lectureName = "";

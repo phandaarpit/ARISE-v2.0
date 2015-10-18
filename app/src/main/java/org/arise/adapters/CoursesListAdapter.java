@@ -33,6 +33,7 @@ public class CoursesListAdapter extends BaseAdapter{
     private int height,width;
     private int lastPosition;
     private String lastItemName;
+    private TTSInitListener tts;
 
     public CoursesListAdapter(Context context, JSONArray courses, CourseStatus status, int height, int width) {
         arrayJSON = courses;
@@ -40,6 +41,7 @@ public class CoursesListAdapter extends BaseAdapter{
         option = status;
         this.height = height;
         this.width = width;
+        tts = TTSInitListener.getInstance();
     }
 
     @Override
@@ -63,6 +65,7 @@ public class CoursesListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        tts.snooze();
         View row = null;
         JSONObject course;
         item = "";
@@ -132,8 +135,7 @@ public class CoursesListAdapter extends BaseAdapter{
         }
         lastPosition = position;
         lastItemName = item;
-        System.out.println("ITEM BEING FETCHED: "+item);
-        TTSInitListener tts =  TTSInitListener.getInstance(context);
+
         tts.setText("You are on " + item);
         tts.speakOut();
 

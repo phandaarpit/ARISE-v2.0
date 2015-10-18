@@ -51,4 +51,11 @@ public class TTSInitListener implements TextToSpeech.OnInitListener {
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
+
+    public void snooze(){
+        if(tts!=null){
+            tts.stop();
+        }
+    }
+
 }
