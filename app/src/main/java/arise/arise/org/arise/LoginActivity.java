@@ -24,6 +24,7 @@ import org.apache.http.protocol.HttpContext;
 import org.arise.enums.Options;
 import org.arise.enums.SharedPreferenceEnum;
 import org.arise.interfaces.IAsyncInterface;
+import org.arise.textToSpeech.TTSInitListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,8 +48,8 @@ public class LoginActivity extends ActionBarActivity implements IAsyncInterface 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Fabric.with(this, new Crashlytics());
+        TTSInitListener tts = TTSInitListener.getInstance(this);
         CookieStore cookieStore = new BasicCookieStore();
-
         LoginActivity.localContext = new BasicHttpContext();
         localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 
@@ -206,5 +207,10 @@ public class LoginActivity extends ActionBarActivity implements IAsyncInterface 
     public void forgotPassword(View view) {
         Intent intent = new Intent(this,ForgotPassword.class);
         this.startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

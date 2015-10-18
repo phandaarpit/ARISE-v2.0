@@ -1,6 +1,7 @@
 package arise.arise.org.arise;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +13,9 @@ import android.view.View;
 
 import org.arise.adapters.TabsPagerAdapter;
 import org.arise.fragments.NavigationDrawer;
+import org.arise.listeners.PagerViewChangeListener;
 import org.arise.tab.SlidingTabLayout;
+import org.arise.textToSpeech.TTSInitListener;
 
 
 public class HomeActivity extends BaseActivity {
@@ -37,11 +40,11 @@ public class HomeActivity extends BaseActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
+        viewPager.addOnPageChangeListener(new PagerViewChangeListener());
         viewPager.setOffscreenPageLimit(2);
 
         tabs.setCustomTabView(R.layout.custom_tab, R.id.tab_text);
         tabs.setDistributeEvenly(true);
-
         tabs.setBackgroundColor(Color.parseColor("#212121"));
         tabs.setSelectedIndicatorColors(Color.parseColor("#B71C1C"));
         tabs.setViewPager(viewPager);
@@ -49,7 +52,7 @@ public class HomeActivity extends BaseActivity {
 
         NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawer.setUpDrawer(drawerLayout,toolbar, R.id.fragment_navigation_drawer, main_view);
-
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override

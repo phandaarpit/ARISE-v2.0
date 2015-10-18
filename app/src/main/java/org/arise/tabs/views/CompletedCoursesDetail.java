@@ -36,6 +36,7 @@ public class CompletedCoursesDetail extends Fragment implements IAsyncInterface{
     JSONArray courses;
     private View layout;
     private SingleScrollListView list;
+    public static CoursesListAdapter adapter;
 
     public CompletedCoursesDetail()
     {
@@ -79,7 +80,9 @@ public class CompletedCoursesDetail extends Fragment implements IAsyncInterface{
                     Log.d("CHECK","ITS NULL");
                 }
                 Log.d("CHECK", "NOT NULL" + courses.toString());
-                list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.COMPLETED, layout.getHeight(), layout.getWidth()));
+
+                adapter = new CoursesListAdapter(getActivity(),this.courses, CourseStatus.COMPLETED, layout.getHeight(), layout.getWidth());
+                list.setAdapter(adapter);
                 list.setOnItemClickListener(new CourseListListener(getActivity(),courses,CourseStatus.COMPLETED));
                 list.setSingleScroll(true);
             }

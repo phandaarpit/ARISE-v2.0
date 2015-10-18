@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -35,12 +39,23 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
     boolean course_completed = false;
     boolean course_current = false;
     boolean lectureComplete = false;
+    private GestureDetector mDetector;
+    private View.OnTouchListener gestureListener;
+//    private SlidingUpPanelLayout dragLayout;
+    View main_view;
+    YouTubePlayerSupportFragment youTubePlayerFragment;
+    boolean isPlaying = false;
+    Button recordButton;
+    LinearLayout gesturePane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_lecture);
-        View main_view = findViewById(R.id.youtube_id);
+
+        main_view= findViewById(R.id.youtube_id);
+        gesturePane = (LinearLayout)findViewById(R.id.gestureView);
+
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         Bundle bundle = getIntent().getExtras();
@@ -62,11 +77,14 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(lectureName);
 
-        NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawer.setUpDrawer(drawerLayout,toolbar, R.id.fragment_navigation_drawer, main_view);
+        recordButton = (Button)findViewById(R.id.recordButton);
+        recordButton.setVisibility(View.GONE);
 
-        YouTubePlayerSupportFragment youTubePlayerFragment = (YouTubePlayerSupportFragment) this.getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
-        youTubePlayerFragment.initialize(API_KEY,this );
+        youTubePlayerFragment = (YouTubePlayerSupportFragment) this.getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
+        youTubePlayerFragment.initialize(API_KEY, this);
+
+        NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawer.setUpDrawer(drawerLayout, toolbar, R.id.fragment_navigation_drawer, main_view);
 
     }
 
@@ -93,6 +111,43 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener(){
+
+            @Override
+            public void onLongPress(MotionEvent e){
+                System.out.println("DETECTED LONG PRESS");
+                recordButton.setVisibility(View.VISIBLE);
+//                youTubePlayer.pause();
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                System.out.println("DETECTED SINGLE TAP");
+                if(!youTubePlayer.isPlaying()) {
+                    System.out.println("Will play");
+                    youTubePlayer.play();
+                }else if(youTubePlayer.isPlaying()){
+                    System.out.println("Will pause");
+                    youTubePlayer.pause();
+                }
+                return true;
+            }
+        });
+
+        gestureListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("ACK!!");
+                mDetector.onTouchEvent(event);
+                return true;
+            }
+        };
+        gesturePane.setOnTouchListener(gestureListener);
+    }
 
     YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
 
@@ -106,6 +161,7 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
 
         @Override
         public void onLoaded(String arg0) {
+            System.out.println("Video Loaded!!");
         }
 
         @Override
@@ -160,4 +216,5 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
         this.startActivity(homeActivity);
 
     }
+
 }

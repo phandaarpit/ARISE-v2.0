@@ -15,8 +15,8 @@ public class SingleScrollListView extends ListView{
 
     private boolean mSingleScroll = false;
     private VelocityTracker mVelocity = null;
-    final private float mEscapeVelocity = 2000.0f;
-    final private int mMinDistanceMoved = 20;
+    final private float mEscapeVelocity = 500.0f;
+    final private int mMinDistanceMoved = 10;
     private float mStartY = 0;
 
     public SingleScrollListView(Context context) {
@@ -44,8 +44,9 @@ public class SingleScrollListView extends ListView{
     {
         if (aMotionEvent.getAction() == MotionEvent.ACTION_DOWN)
         {
-            if (mSingleScroll && mVelocity == null)
+            if (mSingleScroll && mVelocity == null) {
                 mVelocity = VelocityTracker.obtain();
+            }
             mStartY = aMotionEvent.getY();
             return super.dispatchTouchEvent(aMotionEvent);
         }

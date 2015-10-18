@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.arise.enums.CourseStatus;
+import org.arise.textToSpeech.TTSInitListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,8 @@ public class CoursesListAdapter extends BaseAdapter{
     private String itemDesc;
     private CourseStatus option;
     private int height,width;
+    private int lastPosition;
+    private String lastItemName;
 
     public CoursesListAdapter(Context context, JSONArray courses, CourseStatus status, int height, int width) {
         arrayJSON = courses;
@@ -42,6 +45,10 @@ public class CoursesListAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         return arrayJSON.length();
+    }
+
+    public String getLastItemName(){
+        return lastItemName;
     }
 
     @Override
@@ -123,7 +130,14 @@ public class CoursesListAdapter extends BaseAdapter{
             toFill.setText("IN PROGRESS");
             toFill.setBackgroundColor(Color.parseColor("#ffb300"));
         }
+        lastPosition = position;
+        lastItemName = item;
+        System.out.println("ITEM BEING FETCHED: "+item);
+        TTSInitListener tts =  TTSInitListener.getInstance(context);
+        tts.setText("You are on " + item);
+        tts.speakOut();
 
         return row;
     }
+
 }

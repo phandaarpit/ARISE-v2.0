@@ -15,45 +15,54 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".RegisterationActivity"
-            android:label="@string/title_activity_registeration" >
+            android:label="@string/title_activity_registeration"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".HomeActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AboutArise"
-            android:label="@string/title_activity_about_arise" >
+            android:label="@string/title_activity_about_arise"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AboutUser"
-            android:label="@string/title_activity_about_user" >
+            android:label="@string/title_activity_about_user"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".CourseDetailsActivity"
-            android:label="@string/title_activity_course_details" >
+            android:label="@string/title_activity_course_details"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".PlayLectureActivity"
-            android:label="@string/title_activity_play_lecture" >
+            android:label="@string/title_activity_play_lecture"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".NoConnectionActivity"
-            android:label="@string/title_activity_no_connection" >
+            android:label="@string/title_activity_no_connection"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ForgotPassword"
-            android:label="@string/title_activity_forgot_password" >
+            android:label="@string/title_activity_forgot_password"
+            android:screenOrientation="portrait">
         </activity>
         <meta-data
             android:name="io.fabric.ApiKey"

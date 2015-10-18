@@ -3,14 +3,9 @@ package org.arise.tabs.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,7 +14,6 @@ import org.arise.adapters.CoursesListAdapter;
 import org.arise.enums.CourseRequestType;
 import org.arise.enums.CourseStatus;
 import org.arise.enums.Options;
-import org.arise.gesture.CustomGestureDetector;
 import org.arise.interfaces.IAsyncInterface;
 import org.arise.listeners.CourseListListener;
 import org.json.JSONArray;
@@ -40,9 +34,7 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
     JSONArray courses;
     private View layout;
     public static SingleScrollListView list;
-    public static int current = 0;
-    private GestureDetector gestureDetector;
-    private View.OnTouchListener gestureListener;
+    public static CoursesListAdapter adapter;
 
     public AllCoursesDetail()
     {
@@ -82,7 +74,8 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
                 this.courses = courses;
 
                 //added a new parameter to keep a check on status of the course
-                list.setAdapter(new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL, layout.getHeight(), layout.getWidth()));
+                adapter = new CoursesListAdapter(getActivity(),this.courses, CourseStatus.ALL, layout.getHeight(), layout.getWidth());
+                list.setAdapter(adapter);
                 list.setOnItemClickListener(new CourseListListener(getActivity(), courses, CourseStatus.ALL));
                 list.setSingleScroll(true);
             }
@@ -91,4 +84,5 @@ public class AllCoursesDetail extends Fragment implements IAsyncInterface{
             e.printStackTrace();
         }
     }
+
 }

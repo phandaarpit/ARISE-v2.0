@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.arise.textToSpeech.TTSInitListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +30,8 @@ public class LecturesListAdapter extends BaseAdapter{
     private boolean current;
     private int height;
     private int width;
+    private TTSInitListener tts;
+    private String text;
 
     public LecturesListAdapter(JSONArray lectureArray, Context context, Boolean completed, Boolean current, int height, int width) {
         this.lectures = lectureArray;
@@ -37,6 +40,8 @@ public class LecturesListAdapter extends BaseAdapter{
         this.current = current;
         this.height = height;
         this.width = width;
+
+        tts = TTSInitListener.getInstance();
     }
 
     @Override
@@ -115,6 +120,11 @@ public class LecturesListAdapter extends BaseAdapter{
             toFill.setBackgroundColor(Color.parseColor("#b2ff59"));
         }
         row.setLayoutParams(new ViewGroup.LayoutParams(this.width,this.height));
+
+        text = "You are on Lecture   "+lectureName;
+        tts.setText(text);
+        tts.speakOut();
+
         return row;
     }
 }
