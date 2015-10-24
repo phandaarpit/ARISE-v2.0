@@ -45,7 +45,7 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
     View main_view;
     YouTubePlayerSupportFragment youTubePlayerFragment;
     boolean isPlaying = false;
-    Button recordButton;
+    LinearLayout recordButton;
     LinearLayout gesturePane;
 
     @Override
@@ -77,7 +77,7 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(lectureName);
 
-        recordButton = (Button)findViewById(R.id.recordButton);
+        recordButton = (LinearLayout)findViewById(R.id.recordButton);
         recordButton.setVisibility(View.GONE);
 
         youTubePlayerFragment = (YouTubePlayerSupportFragment) this.getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
@@ -85,6 +85,7 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
 
         NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawer.setUpDrawer(drawerLayout, toolbar, R.id.fragment_navigation_drawer, main_view);
+        System.out.println("OnCreate cleared");
 
     }
 
@@ -112,10 +113,8 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
     }
 
     @Override
-    public void onResume()
-    {
-        super.onResume();
-        mDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener(){
+    public void onResume(){
+        mDetector = new GestureDetector(this ,new GestureDetector.SimpleOnGestureListener(){
 
             @Override
             public void onLongPress(MotionEvent e){
@@ -147,9 +146,10 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
             }
         };
         gesturePane.setOnTouchListener(gestureListener);
+        super.onResume();
     }
 
-    YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
+        YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
 
         @Override
         public void onAdStarted() {

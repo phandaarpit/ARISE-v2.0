@@ -134,7 +134,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/dob"
                 android:focusable="false"
-                android:inputType="date"
                 android:onClick="setDate"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/username_background"

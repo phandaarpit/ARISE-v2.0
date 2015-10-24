@@ -1,13 +1,17 @@
 package arise.arise.org.arise;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -60,6 +64,8 @@ public class RegisterationActivity extends ActionBarActivity implements IAsyncIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_registeration);
 
         fname = (EditText)findViewById(R.id.fname);
@@ -67,6 +73,8 @@ public class RegisterationActivity extends ActionBarActivity implements IAsyncIn
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
         dob = (EditText)findViewById(R.id.dob);
+        dob.setInputType(InputType.TYPE_NULL);
+
         contact = (EditText)findViewById(R.id.contact);
         country = (EditText)findViewById(R.id.country);
         qual = (EditText)findViewById(R.id.qual);
@@ -75,6 +83,8 @@ public class RegisterationActivity extends ActionBarActivity implements IAsyncIn
 
         pickDate = new DatePickerDialog(RegisterationActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
+
+
     }
 
 
@@ -87,6 +97,8 @@ public class RegisterationActivity extends ActionBarActivity implements IAsyncIn
 
     public void setDate(View v)
     {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(dob.getWindowToken(), 0);
         pickDate.show();
 
     }
