@@ -2,10 +2,13 @@ package org.arise.CustomView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.ListView;
+
+import org.arise.textToSpeech.TTSInitListener;
 
 /**
  * Created by phandaa on 10/12/15.
@@ -15,9 +18,11 @@ public class SingleScrollListView extends ListView{
 
     private boolean mSingleScroll = false;
     private VelocityTracker mVelocity = null;
-    final private float mEscapeVelocity = 500.0f;
-    final private int mMinDistanceMoved = 10;
+    final private float mEscapeVelocity = 10.0f;
+    final private int mMinDistanceMoved = 20;
     private float mStartY = 0;
+    private final String tag = "SingleScroll";
+    private TTSInitListener tts = TTSInitListener.getInstance();
 
     public SingleScrollListView(Context context) {
         super(context);
@@ -60,38 +65,45 @@ public class SingleScrollListView extends ListView{
                     mVelocity.computeCurrentVelocity(1000);
                     float velocity = mVelocity.getYVelocity();
 
+                    //scrolling up
                     if (aMotionEvent.getY() > mStartY)
                     {
                         // always lock
-                        if (velocity > mEscapeVelocity)
+                        if (velocity > mEscapeVelocity){
                             smoothScrollToPosition(getFirstVisiblePosition());
+                        }
                         else
                         {
                             // lock if over half way there
                             View view = getChildAt(0);
                             if (view != null)
                             {
-                                if (view.getBottom() >= getHeight() / 2)
+                                if (view.getBottom() >= getHeight() / 2){
                                     smoothScrollToPosition(getFirstVisiblePosition());
-                                else
+                                }
+                                else{
                                     smoothScrollToPosition(getLastVisiblePosition());
+                                }
                             }
                         }
                     }
-                    else
+                    else //scrollDown
                     {
-                        if (velocity < -mEscapeVelocity)
+                        if (velocity < -mEscapeVelocity){
                             smoothScrollToPosition(getLastVisiblePosition());
+                        }
                         else
                         {
                             // lock if over half way there
                             View view = getChildAt(1);
                             if (view != null)
                             {
-                                if (view.getTop() <= getHeight() / 2)
+                                if (view.getTop() <= getHeight() / 2){
                                     smoothScrollToPosition(getLastVisiblePosition());
-                                else
+                                }
+                                else{
                                     smoothScrollToPosition(getFirstVisiblePosition());
+                                }
                             }
                         }
                     }
@@ -102,11 +114,13 @@ public class SingleScrollListView extends ListView{
 
             if (mSingleScroll)
             {
-                if (Math.abs(aMotionEvent.getY() - mStartY) > mMinDistanceMoved)
+                if (Math.abs(aMotionEvent.getY() - mStartY) > mMinDistanceMoved){
                     return super.dispatchTouchEvent(aMotionEvent);
+                }
             }
-            else
+            else{
                 return super.dispatchTouchEvent(aMotionEvent);
+            }
         }
 
         if (mSingleScroll)
@@ -118,7 +132,11 @@ public class SingleScrollListView extends ListView{
             }
             mVelocity.addMovement(aMotionEvent);
         }
-
         return super.dispatchTouchEvent(aMotionEvent);
+    }
+
+    @Override
+    public void smoothScrollToPosition(int position) {
+        super.smoothScrollToPosition(position);
     }
 }

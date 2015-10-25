@@ -20,6 +20,12 @@ import org.arise.textToSpeech.TTSInitListener;
 
 public class HomeActivity extends BaseActivity {
 
+    private Toolbar toolbar;
+    private View main_view;
+    private DrawerLayout drawerLayout;
+    private SlidingTabLayout tabs;
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -28,31 +34,28 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setEssentials() {
-        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
-        View main_view = findViewById(R.id.to_replace_content);
+        main_view = findViewById(R.id.to_replace_content);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
         viewPager.addOnPageChangeListener(new PagerViewChangeListener());
         viewPager.setOffscreenPageLimit(2);
 
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setCustomTabView(R.layout.custom_tab, R.id.tab_text);
         tabs.setDistributeEvenly(true);
         tabs.setBackgroundColor(Color.parseColor("#212121"));
         tabs.setSelectedIndicatorColors(Color.parseColor("#B71C1C"));
         tabs.setViewPager(viewPager);
 
-
         NavigationDrawer drawer = (NavigationDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawer.setUpDrawer(drawerLayout,toolbar, R.id.fragment_navigation_drawer, main_view);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -63,12 +66,10 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

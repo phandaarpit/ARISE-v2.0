@@ -3,12 +3,9 @@ package org.arise.listeners;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.arise.enums.CourseStatus;
 import org.arise.textToSpeech.TTSInitListener;
@@ -36,7 +33,6 @@ public class CourseListListener implements ListView.OnItemClickListener, ListVie
 
     @Override
     public void onItemClick(AdapterView parent, View view, int position, long id) {
-        System.out.println("Single click captured");
         JSONObject specificCourse = null;
         boolean current = false;
         boolean completed = false;
@@ -72,7 +68,6 @@ public class CourseListListener implements ListView.OnItemClickListener, ListVie
         }
 
         courseDetailsDisplay.putExtras(bundleForDisplay);
-
         context.startActivity(courseDetailsDisplay);
 
     }
@@ -88,7 +83,6 @@ public class CourseListListener implements ListView.OnItemClickListener, ListVie
         }
         tts.setText(desc);
         tts.speakOut();
-
         return true;
     }
 }

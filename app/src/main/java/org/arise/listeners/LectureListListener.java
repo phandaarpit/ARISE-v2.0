@@ -16,13 +16,14 @@ import arise.arise.org.arise.PlayLectureActivity;
 /**
  * Created by arpit on 15/3/15.
  */
-public class LectureListListener implements ListView.OnItemClickListener{
+public class LectureListListener implements ListView.OnItemClickListener, ListView.OnItemLongClickListener{
 
     private Context context;
     private JSONArray lectureArray;
     private boolean completed;
     private boolean current;
     private int courseID;
+    private JSONObject lecture;
 
     public LectureListListener(Context context, JSONArray lectures, Boolean completed, Boolean current,Integer courseID)
     {
@@ -35,8 +36,8 @@ public class LectureListListener implements ListView.OnItemClickListener{
 
 
     @Override
-    public void onItemClick(AdapterView adapterView, View view, int i, long l) {
-        JSONObject lecture = null;
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        lecture = null;
         String lectureName = "";
         String lectureUrl = "";
         int lectureID = 0;
@@ -70,7 +71,11 @@ public class LectureListListener implements ListView.OnItemClickListener{
         bundle.putBoolean("course_current",current);
 
         playYoutubeVideo.putExtras(bundle);
-
         context.startActivity(playYoutubeVideo);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        return true;
     }
 }

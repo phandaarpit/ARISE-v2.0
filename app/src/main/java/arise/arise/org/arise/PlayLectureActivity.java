@@ -118,19 +118,15 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
 
             @Override
             public void onLongPress(MotionEvent e){
-                System.out.println("DETECTED LONG PRESS");
                 recordButton.setVisibility(View.VISIBLE);
 //                youTubePlayer.pause();
             }
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                System.out.println("DETECTED SINGLE TAP");
                 if(!youTubePlayer.isPlaying()) {
-                    System.out.println("Will play");
                     youTubePlayer.play();
                 }else if(youTubePlayer.isPlaying()){
-                    System.out.println("Will pause");
                     youTubePlayer.pause();
                 }
                 return true;
@@ -213,8 +209,8 @@ public class PlayLectureActivity extends BaseActivity implements YouTubePlayer.O
     @Override
     public void onBackPressed() {
         Intent homeActivity = new Intent(this,HomeActivity.class);
+        CourseDetailsActivity.backPressed = true;
         this.startActivity(homeActivity);
-
     }
 
 }

@@ -60,11 +60,4 @@
         android:elevation="50dp"
         android:textColor="#000"
         />
-
-    <!--<ImageView-->
-        <!--android:layout_alignBottom="@+id/top"-->
-        <!--android:id="@+id/course_status"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1.5dp"-->
-        <!--/>-->
 </RelativeLayout>

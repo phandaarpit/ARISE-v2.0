@@ -2,6 +2,7 @@ package org.arise.textToSpeech;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -58,4 +59,8 @@ public class TTSInitListener implements TextToSpeech.OnInitListener {
         }
     }
 
+    public void isReady(boolean isReady){
+        Log.d("SingleScroll","Bool " +ready);
+        ready = isReady;
+    }
 }

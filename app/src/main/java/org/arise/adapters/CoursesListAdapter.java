@@ -3,6 +3,7 @@ package org.arise.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,7 @@ public class CoursesListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         tts.snooze();
+        Log.d("SingleScroll","get view called");
         View row = null;
         JSONObject course;
         item = "";

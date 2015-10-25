@@ -31,32 +31,32 @@ public class AboutUser extends BaseActivity implements IAsyncInterface{
 
     private final String url = "http://ariseimpactapps.in/audiolearningapp/update_user.php";
 
-    LinearLayout hiddenLayout;
-    EditText fname;
-    EditText lname;
-    EditText email;
-    EditText contact;
-    EditText oldPass;
-    EditText newPass;
-    EditText reNewPass;
+    private LinearLayout hiddenLayout;
+    private EditText fname;
+    private EditText lname;
+    private EditText email;
+    private EditText contact;
+    private EditText oldPass;
+    private EditText newPass;
+    private EditText reNewPass;
 
-    TextView textToEnableEditing;
-    TextView textToEnablePasswordEditing;
+    private TextView textToEnableEditing;
+    private TextView textToEnablePasswordEditing;
 
-    Button saveDetails;
+    private Button saveDetails;
 
-    String firstName;
-    String lastName;
-    String emailAddress;
-    String password;
+    private String firstName;
+    private String lastName;
+    private String emailAddress;
+    private String password;
 
 
-    boolean saveDetailsButtonPressed;
-    boolean savePassButtonPressed;
-    boolean emailAddressChanged;
+    private boolean saveDetailsButtonPressed;
+    private boolean savePassButtonPressed;
+    private boolean emailAddressChanged;
 
-    String emailFromPref;
-    String contactNum;
+    private String emailFromPref;
+    private String contactNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
